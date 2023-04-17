@@ -13,9 +13,8 @@ export const AppRouter: React.FC<{}> = () => {
             <Route path="/" element={<RouterLayout />}>
                 {/* Rutas anidadas */}
                 <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
             </Route>
-            <Route path="/nose" element={<div>Hola</div>} />
+            <Route path="/login" element={<LoginPage />} />
         </Routes>
     );
 };
