@@ -1,5 +1,7 @@
 import React from "react";
 import { Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import { useNotification } from "../../context/notification.context";
+import { LoginValidate } from "../../utils/validateForm";
 
 // Definiendo el type de Login con las propiedades (que servirán como estado) a utilizar
 type LoginType = {
@@ -10,6 +12,9 @@ type LoginType = {
 // Componente de tipo funcional que representará la sección para poder logearse
 // No implementará el navbar
 export const LoginPage: React.FC<{}> = () => {
+
+  // Utilizando el custom hook 'useNotification'
+  const { getError, getSuccess } = useNotification();
 
   // Utilizando 'useState' para manejar los siguientes estados 
   const [loginData, setLoginData] = React.useState<LoginType>({
@@ -24,10 +29,16 @@ export const LoginPage: React.FC<{}> = () => {
   };
 
   // Método para enviar lo obtenido en el formulario
-  // De momento mostrar por consola
+  // Se aplicará una validación en los campos del formulario
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault(); // Evitar que la página se recargue
-    console.log(loginData);
+    LoginValidate.validate(loginData)
+      .then(() => {
+        getSuccess(JSON.stringify(loginData));
+      })
+      .catch((error) => {
+        getError(error.message);
+      });
   };
 
   return (
@@ -52,7 +63,6 @@ export const LoginPage: React.FC<{}> = () => {
                 fullWidth
                 label="Email"
                 sx={{ mt: 2, mb: 1.5 }}
-                required
                 onChange={dataLogin}
               />
               <TextField
@@ -62,7 +72,6 @@ export const LoginPage: React.FC<{}> = () => {
                 fullWidth
                 label="Password"
                 sx={{ mt: 1.5, mb: 1.5 }}
-                required
                 onChange={dataLogin}
               />
 
