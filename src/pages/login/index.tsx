@@ -32,11 +32,15 @@ export const LoginPage: React.FC<{}> = () => {
   // Se aplicará una validación en los campos del formulario
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault(); // Evitar que la página se recargue
+
+    // Implementando la validación
     LoginValidate.validate(loginData)
       .then(() => {
+        // En caso de éxito...
         getSuccess(JSON.stringify(loginData));
       })
       .catch((error) => {
+        // En caso de error...
         getError(error.message);
       });
   };
