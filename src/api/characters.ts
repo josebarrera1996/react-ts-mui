@@ -18,7 +18,7 @@ export const characters = {
     },
 
     // Método para traer a un personaje en específico (gracias a su ID)
-    getById: function ({ id }: { id: number }) {
+    getById: function ({ id }: { id: string | undefined }) {
         return instance.get(`${endpoint}/${id}`)
     }
 }

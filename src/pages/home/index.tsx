@@ -5,7 +5,7 @@ import { characters } from "../../api/characters";
 import { TypeCharacter } from "./interface/character.interface";
 
 // Componente de tipo funcional que representará la página de inicio
-export const HomePage: React.FC<{}> = () => {
+export const HomePage: React.FC = () => {
 
   // Utilizando 'useState' para manejar los siguientes estados
   const [allCharacters, setAllCharacters] = React.useState<TypeCharacter[] | null>(null); // Empleando 'TypeCharacter[]' para manejar las propiedades de los personajes en un arreglo
@@ -69,6 +69,7 @@ export const HomePage: React.FC<{}> = () => {
                       name={character.name}
                       species={character.species}
                       status={character.status}
+                      id={character.id}
                     />
                   </Grid>
                 ))}
