@@ -35,7 +35,9 @@ export const CardComponent: React.FC<CardProps> = ({ image, name, species, statu
     const dispatch = useAppDispatch();
     const itemExist = useAppSelector((state) => state.cartReducer);
 
-    // Utilizando 'useEffect' para poder cargar los items y manejar la visibilidad del botón para añadir items al Carrito
+    // Utilizando 'useEffect' para:
+    // - Cargar los items del LocalStorage
+    // - Deshabilitar los botones de los items ya cargados en el Carrito, para evitar que se agreguen
     React.useEffect(() => {
         setDisabledBtn(itemExist.some((item) => item.id === id));
         setItem('cart', itemExist);

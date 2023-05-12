@@ -27,13 +27,12 @@ export const cartSlice = createSlice({
     reducers: {
         // Método para añadir items al carrito
         addToCart: (state, action: PayloadAction<CartAddState>) => {
+            // Obteniendo el ID del item
             const { id } = action.payload;
-            if (
-                state.length === 0 ||
-                state.filter((item) => item.id === id).length === 0
-            ) {
+            // Chequear si el item a agregar ya existe o no en el arreglo de estados
+            if (state.length === 0 || state.filter((item) => item.id === id).length === 0) {
+                // Si no lo está, agregarlo
                 state.push(action.payload);
-
             }
         },
         // Método para remover items del carrito
@@ -46,5 +45,5 @@ export const cartSlice = createSlice({
     },
 });
 
-// Exportando las acciones para que puedan ser utilizadas por el reducer
+// Exportando las acciones de nuestros reducers
 export const { addToCart, removeToCart } = cartSlice.actions;
