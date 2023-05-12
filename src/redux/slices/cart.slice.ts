@@ -37,7 +37,10 @@ export const cartSlice = createSlice({
         },
         // Método para remover items del carrito
         removeToCart: (state, action: PayloadAction<CartRemoveState>) => {
+            // Obteniendo el ID del item
             const { id } = action.payload;
+            // Remover el item que coincida con el indicado por el usuario
+            // Al aplicarse un filtrado en el que se traigan todos los items a excepción del seleccionado
             if (state.some((item) => item.id === id)) {
                 return state = state.filter((item) => item.id !== id)
             }
