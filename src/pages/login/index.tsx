@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useNotification } from "../../context/notification.context";
 import { LoginValidate } from "../../utils/validateForm";
+import { useFormik } from 'formik';
 
 // Definiendo el type de Login con las propiedades (que servirán como estado) a utilizar
 type LoginType = {
@@ -14,8 +15,24 @@ type LoginType = {
 export const LoginPage: React.FC<{}> = () => {
 
   // Utilizando el custom hook 'useNotification'
-  const { getError, getSuccess } = useNotification();
+  const { getSuccess } = useNotification();
 
+  // Utilizando 'useFormik' para implementar las validaciones en los campos requeridos
+  const formik = useFormik<LoginType>({
+    // Valores iniciales de los campos 'input'
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    // Validación con Yup
+    validationSchema: LoginValidate, 
+    // Método para enviar los datos (no sin antes de comprobar las respetivas validaciones)
+    onSubmit: (values: LoginType) => {
+      getSuccess(JSON.stringify(values));
+    },
+  });
+
+  /*
   // Utilizando 'useState' para manejar los siguientes estados 
   const [loginData, setLoginData] = React.useState<LoginType>({
     username: "",
@@ -27,7 +44,7 @@ export const LoginPage: React.FC<{}> = () => {
     // Asignando los valores ingresados a los campos especificados en el 'name' de los inputs
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
-
+  
   // Método para enviar lo obtenido en el formulario
   // Se aplicará una validación en los campos del formulario
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
@@ -44,6 +61,7 @@ export const LoginPage: React.FC<{}> = () => {
         getError(error.message);
       });
   };
+  */
 
   return (
     <Container maxWidth="sm">
@@ -52,14 +70,14 @@ export const LoginPage: React.FC<{}> = () => {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        sx={{ minHeight: "100vh" }}
+        sx={{ minHeight: '100vh' }}
       >
         <Grid item>
-          <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
+          <Paper sx={{ padding: '1.2em', borderRadius: '0.5em' }}>
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
               Iniciar sesion
             </Typography>
-            <Box component="form" onSubmit={handleSubmit}>
+            <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
                 name="username"
                 margin="normal"
@@ -67,7 +85,12 @@ export const LoginPage: React.FC<{}> = () => {
                 fullWidth
                 label="Email"
                 sx={{ mt: 2, mb: 1.5 }}
-                onChange={dataLogin}
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
               />
               <TextField
                 name="password"
@@ -76,7 +99,12 @@ export const LoginPage: React.FC<{}> = () => {
                 fullWidth
                 label="Password"
                 sx={{ mt: 1.5, mb: 1.5 }}
-                onChange={dataLogin}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
               />
 
               <Button
