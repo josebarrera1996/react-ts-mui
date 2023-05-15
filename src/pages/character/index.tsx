@@ -5,7 +5,7 @@ import { ICharacter } from "./interface/character.interface";
 import { Box, Chip, CircularProgress, Container, Divider, Grid, Typography } from "@mui/material";
 
 // Componente funcional que servirá para representar a un personaje en particular
-export const CharacterPage: React.FC = () => {
+const CharacterPage: React.FC = () => {
 
     // Utilizando 'useParams' para obtener el parámetro 'ID'
     const { id } = useParams();
@@ -55,3 +55,6 @@ export const CharacterPage: React.FC = () => {
         </Box>
     );
 }
+
+// Exportando este componente
+export default CharacterPage;

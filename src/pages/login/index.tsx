@@ -12,7 +12,7 @@ type LoginType = {
 
 // Componente de tipo funcional que representará la sección para poder logearse
 // No implementará el navbar
-export const LoginPage: React.FC<{}> = () => {
+const LoginPage: React.FC<{}> = () => {
 
   // Utilizando el custom hook 'useNotification'
   const { getSuccess } = useNotification();
@@ -122,3 +122,6 @@ export const LoginPage: React.FC<{}> = () => {
     </Container>
   );
 };
+
+// Exportando este componente
+export default LoginPage;
